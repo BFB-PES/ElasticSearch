@@ -34,20 +34,26 @@ def consume_and_write_to_postgres(topic, bootstrap_servers, postgres_config):
             else:
                 print(msg.error())
                 break
-        if msg is not None:
-            # Process the received message and write to PostgreSQL
-            value = msg.value().decode('utf8').replace("'", '"')
-            
+        
+        # Process the received message and write to PostgreSQL
+        value = msg.value().decode('utf8').replace("'", '"')
+        
+        
+        try:
             row_dict = json.loads(value)
             # Example: Insert data into PostgreSQL
-            insert_query = "INSERT INTO fashion (id, name) VALUES (%s, %s)"
-            cursor.execute(insert_query, (row_dict['id'], row_dict['name']))
-            conn.commit()
+            insert_query = "INSERT INTO fashion1 (id, name, price, mrp, rating, ratingTotal, discount, seller, color, Sku, in_stock) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            cursor.execute(insert_query, (int(row_dict['id']), row_dict['name'], float(row_dict['price']), float(row_dict['mrp']), float(row_dict['rating']), float(row_dict['ratingTotal']), int(row_dict['discount']), row_dict['seller'], row_dict['color'], int(row_dict['Sku']), int(row_dict['in_stock'])))
+        except:
+            continue
+        conn.commit()
+        
     
 
     # Clean up
     cursor.close()
     conn.close()
+
 
 postgres_config = {
     'host': 'localhost',
