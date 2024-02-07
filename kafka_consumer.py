@@ -42,7 +42,7 @@ def consume_and_write_to_postgres(topic, bootstrap_servers, postgres_config):
         try:
             row_dict = json.loads(value)
             # Example: Insert data into PostgreSQL
-            insert_query = "INSERT INTO fashion1 (id, name, price, mrp, rating, ratingTotal, discount, seller, color, Sku, in_stock) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            insert_query = "INSERT INTO fashion0 (id, name, price, mrp, rating, ratingTotal, discount, seller, color, Sku, in_stock) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
             cursor.execute(insert_query, (int(row_dict['id']), row_dict['name'], float(row_dict['price']), float(row_dict['mrp']), float(row_dict['rating']), float(row_dict['ratingTotal']), int(row_dict['discount']), row_dict['seller'], row_dict['color'], int(row_dict['Sku']), int(row_dict['in_stock'])))
         except:
             continue
@@ -63,4 +63,4 @@ postgres_config = {
     'port': '5432'  # Default PostgreSQL port
 }
 # Example usage
-consume_and_write_to_postgres('BFB1', 'localhost:9092', postgres_config)
+consume_and_write_to_postgres('BFB3', 'localhost:9092', postgres_config)
