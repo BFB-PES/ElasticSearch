@@ -57,5 +57,5 @@ def produce_terminal_to_kafka(topic, bootstrap_servers):
     producer.flush()   
 
 # Example usage
-produce_csv_to_kafka('Datasets/Fashion_dataset.csv', 'BFB1', 'localhost:9092')
+produce_csv_to_kafka('Datasets/Fashion_dataset.csv', 'BFB3', 'localhost:9092')
 produce_terminal_to_kafka('BFB3', 'localhost:9092')
